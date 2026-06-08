@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --burgundy: #7b1e22;
+  --ember: #e1502a;
+  --cream: #fbf4e9;
+  --gold: #d4a853;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--cream);
+  color: #2a2422;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Premium text selection */
+::selection {
+  background-color: #7b1e22;
+  color: #fbf4e9;
+}
+
+/* Optical sizing for display headings */
+h1, h2, h3 {
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Hide scrollbar for the swipeable mobile category chips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@layer components {
+  /* Premium primary button: burgundy → ember gradient */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-warm-gradient px-7 py-3.5
+      font-semibold text-cream shadow-warm-sm transition-all duration-300
+      hover:shadow-warm hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  /* Secondary button: cream background with burgundy border */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-burgundy
+      bg-cream/80 px-7 py-3.5 font-semibold text-burgundy backdrop-blur transition-all
+      duration-300 hover:bg-burgundy hover:text-cream hover:-translate-y-0.5;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl font-semibold leading-tight text-burgundy sm:text-4xl md:text-5xl;
+    font-optical-sizing: auto;
+    text-wrap: balance;
+  }
+
+  /* Eyebrow pill badge — consistent across all sections */
+  .eyebrow {
+    @apply inline-flex items-center gap-1.5 rounded-full px-4 py-1.5
+      text-xs font-bold uppercase tracking-[0.12em];
+  }
+  .eyebrow-ember {
+    @apply eyebrow bg-ember/10 text-ember;
+  }
+  .eyebrow-burgundy {
+    @apply eyebrow bg-burgundy/10 text-burgundy;
+  }
+  .eyebrow-gold {
+    @apply eyebrow border border-gold/30 bg-gold/10 text-gold-dark;
+  }
+  .eyebrow-cream {
+    @apply eyebrow border border-cream/20 bg-cream/10 text-amber-200 backdrop-blur;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Salvadoran textile pattern — subtle woven background accent.
+   Used behind warm sections via the .textile-bg utility.
+---------------------------------------------------------------------------- */
+.textile-bg {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.04) 2px,
+      transparent 2px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 2px,
+      transparent 2px,
+      transparent 10px
+    );
+}
+
+/* Corn-masa / handmade-paper grain for cream sections */
+.masa-grain {
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(225, 80, 42, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(123, 30, 34, 0.05) 0%, transparent 45%);
+}
+
+/* Salvadoran blue/white decorative stripe (textile border accent) */
+.salva-border {
+  background: repeating-linear-gradient(
+    90deg,
+    #0f47af 0px,
+    #0f47af 18px,
+    #ffffff 18px,
+    #ffffff 36px
+  );
+}
+
+/* Salvadoran flag textile borders — cobalt blue / white / cobalt blue */
+.textile-strip {
+  /* vertical (left edge) — stripes top-to-bottom */
+  background: linear-gradient(
+    to bottom,
+    #0F47AF 0%, #0F47AF 33%,
+    #ffffff 33%, #ffffff 67%,
+    #0F47AF 67%, #0F47AF 100%
+  );
+}
+.textile-strip-h {
+  /* horizontal (bottom edge) — stripes left-to-right */
+  background: linear-gradient(
+    to right,
+    #0F47AF 0%, #0F47AF 33%,
+    #ffffff 33%, #ffffff 67%,
+    #0F47AF 67%, #0F47AF 100%
+  );
+}
+
+/* Maíz (corn kernel) repeating pattern — subtle gold grain on cream sections */
+.maiz-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='50'%3E%3Cellipse cx='20' cy='25' rx='7' ry='11' fill='%23D4A853' opacity='0.1'/%3E%3Cline x1='20' y1='14' x2='20' y2='36' stroke='%23B8892F' stroke-width='1' opacity='0.06'/%3E%3C/svg%3E");
+  background-size: 40px 50px;
+}
+
+/* Steam wisp used above food cards */
+.steam {
+  position: absolute;
+  width: 8px;
+  height: 26px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.55), transparent);
+  border-radius: 50%;
+  filter: blur(3px);
+}
