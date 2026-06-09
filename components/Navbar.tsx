@@ -29,17 +29,21 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  // Close the menu first (restoring body scroll), then scroll to the target
-  // section. Navigating while body overflow is hidden cancels the scroll.
+  // Close the menu first (restoring body scroll), wait for the close animation,
+  // then scroll manually. Scrolling while the menu is animating shut gets
+  // cancelled on mobile browsers, and window.scrollTo ignores scroll-padding,
+  // so the fixed-header offset is applied by hand.
   const handleMobileNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setOpen(false);
     document.body.style.overflow = "";
-    const el = document.querySelector(href);
-    requestAnimationFrame(() => {
-      el?.scrollIntoView({ behavior: "smooth" });
-    });
     history.pushState(null, "", href);
+    window.setTimeout(() => {
+      const el = document.querySelector<HTMLElement>(href);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 120;
+      window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+    }, 350);
   };
 
   useEffect(() => {
