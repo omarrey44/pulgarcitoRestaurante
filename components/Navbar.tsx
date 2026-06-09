@@ -29,6 +29,19 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  // Close the menu first (restoring body scroll), then scroll to the target
+  // section. Navigating while body overflow is hidden cancels the scroll.
+  const handleMobileNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setOpen(false);
+    document.body.style.overflow = "";
+    const el = document.querySelector(href);
+    requestAnimationFrame(() => {
+      el?.scrollIntoView({ behavior: "smooth" });
+    });
+    history.pushState(null, "", href);
+  };
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && open) {
@@ -119,7 +132,7 @@ export default function Navbar() {
                 >
                   <a
                     href={link.href}
-                    onClick={() => setOpen(false)}
+                    onClick={(e) => handleMobileNav(e, link.href)}
                     className="block rounded-xl px-4 py-3 font-semibold text-charcoal transition-colors hover:bg-burgundy/5 hover:text-ember"
                   >
                     {tr.nav[link.id][lang]}
