@@ -62,6 +62,15 @@ export default function Reviews() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -40 }}
               transition={{ duration: 0.35 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.6}
+              onDragEnd={(_, info) => {
+                // Swipe left → next, swipe right → previous
+                if (info.offset.x < -60 || info.velocity.x < -400) go(1);
+                else if (info.offset.x > 60 || info.velocity.x > 400) go(-1);
+              }}
+              className="cursor-grab touch-pan-y active:cursor-grabbing"
             >
               <ReviewCard review={reviews[index]} lang={lang} />
             </motion.div>
